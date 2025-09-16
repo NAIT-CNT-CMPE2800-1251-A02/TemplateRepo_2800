@@ -63,17 +63,17 @@ namespace ICA1_TEST
         /// </summary>
         public static Dictionary<K, int> Categorize<K>(this IEnumerable<K> sourcelist)
         {
-            if (sourcelist == null)
+            if (sourcelist == null)//if its null just do Expection
                 throw new ArgumentNullException("Source collection cannot be null.");
 
             Dictionary<K, int> counts = new Dictionary<K, int>();
 
             foreach (K item in sourcelist)
             {
-                if (counts.ContainsKey(item))
+                if (counts.ContainsKey(item))//if it contain thhen add to the source
                     counts[item]++;
                 else
-                    counts.Add(item, 1);
+                    counts.Add(item, 1);//else make the key 
             }
 
             return counts.OrderBy(x => x.Key).ToDictionary(x => x.Key, y => y.Value);
@@ -87,12 +87,13 @@ namespace ICA1_TEST
         /// <returns>
         /// The second-to-last element if available.
         /// Returns a new instance of T if there is only one element.
-        public static T Penultimate<T>(this IEnumerable<T> source) where T : new()
+        public static T Penultimate<T>(this IEnumerable<T> source)
+            where T : new()
         {
-            if (source == null)
+            if (source == null)//checking the null
                 return new T();
 
-            if (!source.Any())
+            if (!source.Any())//if its empty nothing there
                 throw new ArgumentException("Collection is empty, cannot get penultimate element.");
 
             if (source.Count() < 2)
@@ -124,19 +125,20 @@ namespace ICA1_TEST
         /// <typeparam name="K">The element type (must implement IEquatable).</typeparam>
         /// <param name="source">The sequence of elements.</param>
         /// <returns>The first element that appears twice in a row, or default(K) if none exist.
-        public static K AdjacentDuplicate<K>(this IEnumerable<K> source) where K : IEquatable<K>
+        public static K AdjacentDuplicate<K>(this IEnumerable<K> source)
+            where K : IEquatable<K>
         {
-            if (source == null)
+            if (source == null)//checking the null
                 throw new ArgumentNullException("Source collection cannot be null.");
 
             IEnumerator<K> enumerator = source.GetEnumerator();
             
-                if (!enumerator.MoveNext())
-                    return default (K); // Empty sequence → no duplicates.
+                if (!enumerator.MoveNext())//if its empty the gona return deafut type
+                    return default (K); 
 
-                K previous = enumerator.Current;
+                K previous = enumerator.Current;//making the first to the previous
 
-                while (enumerator.MoveNext())
+                while (enumerator.MoveNext())//going to move next make the next eement to the current & current to the previous
                 {
                     K current = enumerator.Current;
 
@@ -145,9 +147,12 @@ namespace ICA1_TEST
 
                     previous = current;
                 }
-            
-
-            return default (K); // No adjacent duplicates found.
+            //JUST THE Logic thing /*
+            //"Take the first element and mark it as “previous.”Move through the
+            //rest of the collection one element at a time:  Set the current e
+            //lement.If the current element is the same as the previous one, return it.Ot
+            //herwise, update “previous” to this current element and keep going.If no consecutive duplicates are found, nothing is returned.*/
+            return default(K);
         }
 
         /// <summary>
@@ -165,14 +170,11 @@ namespace ICA1_TEST
             if (source == null)
                 throw new ArgumentNullException("Source collection cannot be null.");
 
-            List<K> list = source.ToList();
-
-            if (list.Count == 0)
+            //if its 0 return the empty as string
+            if (source.Count() == 0)
                 return ("[EMPTY]", 0);
-
-            string disp = string.Join(",", list.Select(x => x?.ToString() ?? "null"));
-
-            return (disp, list.Count);
+                                                        //if its nothing there make string 'null'
+            return (string.Join(",", source.Select(x => x?.ToString() ?? "null")), source.Count());
         }
     }
 

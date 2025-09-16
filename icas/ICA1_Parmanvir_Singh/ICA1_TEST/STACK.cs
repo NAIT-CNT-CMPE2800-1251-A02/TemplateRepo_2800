@@ -25,20 +25,17 @@ namespace ICA1_TEST
         {
             get
             {
-                // Convert the categorized dictionary to a list of key-value pairs.
-                // Each KeyValuePair<T,int> represents an element and its count.
-                List<KeyValuePair<T, int>> category = this.Categorize().ToList();
+                //convert to the dictionary
+                Dictionary<T, int> category = this.Categorize();
 
                 // Validate index boundaries.
                 if (index < 0 || index >= category.Count)
                 {
-                    throw new IndexOutOfRangeException(
-                        $"Index {index} is out of range for categorized stack (valid range: 0–{category.Count - 1})."
-                    );
+                    throw new IndexOutOfRangeException($"Index {index} is out of range for categorized stack (valid range: 0–{category.Count - 1}).");
                 }
 
                 // Return the element (key) at the given index.
-                return category[index].Key;
+                return category.ElementAt(index).Key;
             }
         }
 
@@ -56,14 +53,11 @@ namespace ICA1_TEST
                 Dictionary<T, int> categorized = this.Categorize();
 
                 // Ensure the requested key exists.
-                if (!categorized.ContainsKey(key))
+                if (!categorized.ContainsKey(key)) 
                 {
-                    throw new ArgumentException(
-                        $"Key '{key}' does not exist in categorized elements."
-                    );
+                    throw new ArgumentException($"Key '{key}' does not exist in categorized elements.");
                 }
 
-                // Return the value (count) associated with the key.
                 return categorized[key];
             }
         }
