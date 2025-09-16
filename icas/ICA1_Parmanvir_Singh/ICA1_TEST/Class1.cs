@@ -129,7 +129,7 @@ namespace ICA1_TEST
             if (source == null)
                 throw new ArgumentNullException("Source collection cannot be null.");
 
-            var enumerator = source.GetEnumerator();
+            IEnumerator<K> enumerator = source.GetEnumerator();
             
                 if (!enumerator.MoveNext())
                     return default (K); // Empty sequence → no duplicates.
