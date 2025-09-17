@@ -1,4 +1,4 @@
-namespace ICA_2
+﻿namespace ICA_2
 {
     [TestClass]
     public class UnitTest1
@@ -85,8 +85,8 @@ namespace ICA_2
             [TestMethod]
             public void Shuffle_Distribution_Fairness()
             {
-                int[] input = Enumerable.Range(1, 5).ToArray();
-                int trials = 10000;
+                int[] input = Enumerable.Range(1, 10).ToArray();
+                int trials = 10000000;
                 Dictionary<int, int> counts = new Dictionary<int, int>();
                 foreach (int i in input) counts[i] = 0;
 
@@ -97,11 +97,19 @@ namespace ICA_2
                     counts[first]++;//just adding to dictoanaty for lTER CHECKING 
                 }
 
+
                 double expected = trials / (double)input.Length;
+
+                Console.WriteLine("=== Shuffle Fairness Check ===");
+                Console.WriteLine($"Total Trials: {trials}, Expected per element: ~{expected:N0}");
+
+
                 foreach (KeyValuePair<int, int> kv in counts)
                 {
-                    Assert.IsTrue(kv.Value >= expected * 0.8 && kv.Value <= expected * 1.2,//roughly equal counts (within 20%)
-                        $"Element {kv.Key} count {kv.Value} is outside tolerance.");
+                    Console.WriteLine($"Element {kv.Key} → {kv.Value:N0} times");
+
+                    Assert.IsTrue(kv.Value >= expected * 0.95 && kv.Value <= expected * 1.05, // tighter tolerance with more trials
+               $"Element {kv.Key} count {kv.Value} is outside tolerance. Expected ~{expected}.");
                 }
             }
 
@@ -124,24 +132,29 @@ namespace ICA_2
             public void Sample_UniformDistribution()
             {
                 int[] input = new[] { 1, 2, 3, 4 };
-                int trials = 20000;
+                int trials = 10000000;
                 Dictionary<int, int> counts = input.ToDictionary(x => x, x => 0);
 
                 foreach (int val in input.Sample().Take(trials))
-                    counts[val]++;
+                    counts[val]++;                
+               
+                double expected = trials / (double)input.Length;
 
-                // Each element should appear within 20% of expected frequency
+                Console.WriteLine($"Sample_UniformDistribution\nTotal Trials: {trials}, Expected per element: ~{expected:N0}");
+
+                // Each element should appear within 2-3% of expected frequency
                 //Citation : Write a unit test for my Sample<T> extension method
                 //to check that it produces a uniform random distribution. Use an
-                //input array [1,2,3,4]. Run the sampler for 20,000 trials, count h
+                //input array [1,2,3,4]. Run the sampler for 10000000 trials, count h
                 //ow many times each element appears, and store the counts in a dicti
-                //onary. Then verify that each element appears within �20% of the expected frequen
+                //onary. Then verify that each element appears within ±2-4% of the expected frequen
                 //cy. If any element is outside the tolerance, the test should fail with a clear message.
-                double expected = trials / (double)input.Length;
                 foreach (KeyValuePair<int, int> kv in counts)
                 {
-                    Assert.IsTrue(kv.Value >= expected * 0.8 && kv.Value <= expected * 1.2,
-                        $"Element {kv.Key} count {kv.Value} is outside tolerance.");
+                    Console.WriteLine($"Element {kv.Key} → {kv.Value:N0} times");
+
+                    Assert.IsTrue(kv.Value >= expected * 0.95 && kv.Value <= expected * 1.05, // tighter tolerance with more trials
+               $"Element {kv.Key} count {kv.Value} is outside tolerance. Expected ~{expected}.");
                 }
             }
             //GPT  
