@@ -6,7 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ICA_2
-{
+{    ////////////////////////////////////////////////////////////
+    // ICA #02 - IENURABLE
+    // Parmanvir Singh - Jan 25 2024
+    // Submission Code : CMPE2800_1232_ICA01
+    // Mostly test code stuff 
+    ////////////////////////////////////////////////////////////
     public static class UTILITY 
     {
        static Random random = new Random();//make the random so we can use it in later in the code
@@ -51,6 +56,12 @@ namespace ICA_2
         /// <returns></returns>
         public static IEnumerable<List<T>> Peel<T>(this IEnumerable<T> source) 
         {
+            if (source == null) 
+            {
+                throw new ArgumentException("Sorry man but given Source is null ");
+            
+            }
+
             int left = 0;
             int right = source.Count()-1;
 

@@ -7,7 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ICA_2
-{
+{    ////////////////////////////////////////////////////////////
+    // ICA #02 - IENURABLE
+    // Parmanvir Singh - Jan 25 2024
+    // Submission Code : CMPE2800_1232_ICA01
+    // Mostly test code stuff 
+    ////////////////////////////////////////////////////////////
     public class KNIGHTS_CLASS : IEnumerable
     {
         (int, int) VALUE;//initilize the tupple
