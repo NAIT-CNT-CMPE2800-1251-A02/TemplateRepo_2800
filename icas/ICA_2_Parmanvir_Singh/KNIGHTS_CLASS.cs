@@ -17,7 +17,7 @@ namespace ICA_2
     {
         (int, int) VALUE;//initilize the tupple
 
-         (int x, int y)[] KnightMoves = {(2, 1), (2, -1), (-2, 1), (-2, -1),(1, 2), (1, -2), (-1, 2), (-1, -2)};//move valids 
+        readonly (int x, int y)[] KnightMoves = {(2, 1), (2, -1), (-2, 1), (-2, -1),(1, 2), (1, -2), (-1, 2), (-1, -2)};//move valids 
 
         /// <summary>
         /// GIVING THE VAUES LIKE INITILIZING
@@ -25,14 +25,21 @@ namespace ICA_2
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public KNIGHTS_CLASS(int x,int y) 
+        public KNIGHTS_CLASS(int x,int y)
+        {
+            USER_CHECKING(x,y);
+        }
+
+        public void USER_CHECKING(int x, int y) 
         {
             if (x < 0 || x > 7 || y < 0 || y > 7)//checking the moves valids
             {
                 throw new ArgumentOutOfRangeException("Position must be within 0–7 for both x and y.");
             }
-
-            VALUE = new(x, y);//setting the tuple
+            else
+            {
+                VALUE = new(x, y);//setting the tuple
+            }
         }
         /// <summary>
         /// JUST A DEAFULT PROTOTYPE

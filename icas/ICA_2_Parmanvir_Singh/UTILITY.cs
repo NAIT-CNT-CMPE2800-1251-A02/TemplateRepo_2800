@@ -56,9 +56,9 @@ namespace ICA_2
         /// <returns></returns>
         public static IEnumerable<List<T>> Peel<T>(this IEnumerable<T> source) 
         {
-            if (source == null) 
+            if (source is null) 
             {
-                throw new ArgumentException("Sorry man but given Source is null ");
+                throw new ArgumentNullException("NULL");
             
             }
 

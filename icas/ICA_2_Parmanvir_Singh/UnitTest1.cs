@@ -17,13 +17,22 @@
         {
             // Create a knight positioned at (4,4) on an 8x8 board
             KNIGHTS_CLASS kNIGHTS_ = new KNIGHTS_CLASS(4, 4);
+            KNIGHTS_CLASS kNIGHTS_1 = new KNIGHTS_CLASS(0, 0);
+
 
             // Iterate through all legal knight moves (tuples of (x,y))
             foreach ((int, int) k in kNIGHTS_)
             {
                 Console.WriteLine($"{k.Item1},{k.Item2}");// prints all valid moves for the knight from (4,4)
             }
-           
+            Console.WriteLine();
+            foreach ((int, int) item in kNIGHTS_1)
+            {
+                Console.WriteLine($"{item.Item1},{item.Item2}");
+
+            }
+
+
         }
 
         [TestClass]
@@ -67,6 +76,18 @@
                 List<List<int>> result = input.Peel().ToList();
                 //jsut gives you nothing 
                 Assert.AreEqual(0, result.Count);
+            }
+            // Case 4: Null collection
+            // Should return nothing at all
+            [TestMethod]
+            public void Peel_Null()
+            {
+                //int[] input =null;
+                //IEnumerable<List<int>> result =
+                //jsut gives you nothing 
+            
+               Assert.ThrowsException<ArgumentNullException> (() => UTILITY.Peel<int>(null).ToList());
+
             }
 
             // ---------- SHUFFLE ----------
