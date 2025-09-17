@@ -14,6 +14,12 @@ namespace ICA_2
 
          (int x, int y)[] KnightMoves = {(2, 1), (2, -1), (-2, 1), (-2, -1),(1, 2), (1, -2), (-1, 2), (-1, -2)};//move valids 
 
+        /// <summary>
+        /// GIVING THE VAUES LIKE INITILIZING
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public KNIGHTS_CLASS(int x,int y) 
         {
             if (x < 0 || x > 7 || y < 0 || y > 7)//checking the moves valids
@@ -23,12 +29,16 @@ namespace ICA_2
 
             VALUE = new(x, y);//setting the tuple
         }
+        /// <summary>
+        /// JUST A DEAFULT PROTOTYPE
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator GetEnumerator()
         {
-            foreach ((int,int) knight in KnightMoves) 
+            foreach ((int,int) knight in KnightMoves)//ITERATING THE MOVES 
             {
                 (int, int) newposition = new(knight.Item1+VALUE.Item1,knight.Item2+VALUE.Item2);
-
+                //MAIN CORE OF THE CHESS CHECKING THE POSSIBLE MOVES
                 if (newposition.Item1>= 0 && newposition.Item1 <= 7 && newposition.Item2 >= 0 && newposition.Item2 <= 7) 
                 {
                     yield return newposition;

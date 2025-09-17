@@ -9,25 +9,33 @@ namespace ICA_2
 {
     public static class UTILITY 
     {
-       static Random random = new Random();
+       static Random random = new Random();//make the random so we can use it in later in the code
+
+        /// <summary>
+        /// JUST TO DO SIMPLE SHUFFLES AND CONVERT THE TO LIST FOR EASY ASSISABLE
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
         {
-            List<T> l = new List<T>(source);
+            List<T> l = new List<T>(source);//making the list bcz after 1 hour searching it is not possible to do without converting
 
-            if (source == null) { throw new ArgumentException("NULL LIST"); }
-
+            if (source == null) { throw new ArgumentException("NULL LIST"); }//extra safety
+            //make the local function so swaping be simple
             void Swap(int a, int b)
             {
-                T temp = l[a];
+                T temp = l[a];//swaping to first then second to first
                 l[a] = l[b];
                 l[b] = temp;
             }
 
             for (int i = 0; i < source.Count(); i++)
             {
-                int randomelement= random.Next(i,source.Count());
+                int randomelement= random.Next(i,source.Count());//making a random point 
 
-                //T j = source.ElementAt(randomelement);
+                //T j = source.ElementAt(randomelement);//cant work without converting
                 Swap(i,randomelement);
 
                 yield return l[i];
@@ -35,33 +43,45 @@ namespace ICA_2
             }
         }
 
+        /// <summary>
+        /// PEEL- STARTIG FORM 1 AND FROM LAST 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static IEnumerable<List<T>> Peel<T>(this IEnumerable<T> source) 
         {
             int left = 0;
             int right = source.Count()-1;
 
-            while (left <= right)
+            while (left <= right)//UNTIL GO TO MIDPOINT
             {
-                if (left == right)
+                if (left == right)//RETURN ONE ELEM
                 {
                     yield return new List<T> { source.ElementAt(left) };
                 }
                 else
                 {
-                    yield return new List<T> { source.ElementAt(left), source.ElementAt(right) };
+                    yield return new List<T> { source.ElementAt(left), source.ElementAt(right) };//returning as tuple
                 }
-                ++left;--right;
+                ++left;--right;//MAKING THE CODE WORK
             }
         }
 
+        /// <summary>
+        /// EVERYHTING is in user control it fonn GO INTIL INFINITE LOOPING
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static IEnumerable<T> Sample<T>(this IEnumerable<T> source) 
         {
             if (source.Count() == 0) { yield break; }
 
-            while (true) 
+            while (true) //RUN INDEFINATE
             {
                 int i= random.Next(0,source.Count());
-                yield return source.ElementAt(i);
+                yield return source.ElementAt(i);//RETURN A SPECIFIC ELEMENT GENERAT FROM SOURCE AT RANDOM POSITION
             }
         
         }
