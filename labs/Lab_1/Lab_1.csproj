@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="GDIDrawer">
+      <HintPath>..\..\..\..\..\..\OneDrive - NAIT\CLASSESS\advance_programming\ICAS\ICAS_4\ICA_4\GDIDrawer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
