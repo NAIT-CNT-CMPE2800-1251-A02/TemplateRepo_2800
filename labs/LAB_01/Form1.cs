@@ -1,6 +1,11 @@
 using GDIDrawer;
 using static LAB_FINAL_01.HandS;
 
+////////////////////////////////////////////////////////////
+// LAb #01 -Review Lab
+// Parmanvir Singh - Sep/2025
+// Submission Code : CMPE2800_1232_Lab_01f 
+////////////////////////////////////////////////////////////
 namespace LAB_FINAL_01
 {
     public partial class Form1 : Form
@@ -99,7 +104,7 @@ namespace LAB_FINAL_01
         private void UpdateInterval()
         {
             _timer.Interval = _animation_Interval;       
-            lblInterval.Text = $"Interval: {_animation_Interval}ms (Use Mouse Wheel)";
+            lblInterval.Text = $"Interval: {_animation_Interval} ms (Use Mouse Wheel)";
         }
         /// <summary>
         /// same for this one 

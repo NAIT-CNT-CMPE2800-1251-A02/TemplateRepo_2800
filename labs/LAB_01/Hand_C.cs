@@ -5,6 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using GDIDrawer;
 
+////////////////////////////////////////////////////////////
+// LAb #01 -Review Lab
+// Parmanvir Singh - Sep/2025
+// Submission Code : CMPE2800_1232_Lab_01f 
+////////////////////////////////////////////////////////////
+///
 namespace LAB_FINAL_01
 {
     public enum HandType {Rock,Paper,Scissors}//maing the enum of game 
