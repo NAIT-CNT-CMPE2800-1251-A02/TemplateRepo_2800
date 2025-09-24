@@ -105,7 +105,7 @@ namespace LAB_FINAL_01
         private void button1_Click(object sender, EventArgs e)
         {
             _timer.Stop();
-            _simulation.Close();
+            _simulation._drawer.Close();
             System.Environment.Exit(0);
         }
     }

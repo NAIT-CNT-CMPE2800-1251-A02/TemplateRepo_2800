@@ -22,9 +22,6 @@ namespace LAB_FINAL_01
            List<HandType> distinctTypes = hands.Select(h => h.Type).Distinct().ToList();
             return distinctTypes.Count == 1 ? distinctTypes[0] : null;
         }
-        public static Dictionary<HandType, int> GetTypeCounts(this IEnumerable<Hand> hands)
-        {
-            return hands.GroupBy(h => h.Type).ToDictionary(g => g.Key, g => g.Count());
-        }
+   
     }
 }

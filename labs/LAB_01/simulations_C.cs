@@ -12,8 +12,10 @@ namespace LAB_FINAL_01
     public class SimulationManager
     {
         public IReadOnlyList<Hand> Hands => _hands.AsReadOnly();
-
-
+        List<Hand> _hands;
+        public CDrawer _drawer;
+        Random _random;
+        int _frameCount;
         // Constants for simulation parameters
         public const int CANVAS_WIDTH = 800;
         public const int CANVAS_HEIGHT = 600;
@@ -21,24 +23,21 @@ namespace LAB_FINAL_01
         public const int MIN_INTERVAL = 5;
         public const int MAX_INTERVAL = 1000;
 
-        List<Hand> _hands;
-        public CDrawer _drawer;
-        Random _random;
-        int _frameCount;
-
         public bool IsRunning { get; private set; }
 
-        public SimulationManager()
+        public SimulationManager()//deafult class for the simulation
         {
             _hands = new List<Hand>();
             _drawer = new CDrawer(CANVAS_WIDTH, CANVAS_HEIGHT, false);
             _random = new Random();
             _frameCount = 0;
-        }
+        }//gonna create thr doawer hands and like this random
 
         /// <summary>
         /// Initializes the simulation with the specified number of hands.
         /// Validates minimum hand count constraint (minimum 2 hands).
+        /// if less than 2 so gonna give exception but dont need to do this by 
+        /// default the number box is minimum2
         /// </summary>
         public void Initialize(int handCount)
         {
@@ -51,7 +50,7 @@ namespace LAB_FINAL_01
             for (int i = 0; i < handCount; i++)
             {
                 _hands.Add(Hand.CreateRandom(_random, CANVAS_WIDTH, CANVAS_HEIGHT));
-            }
+            }//adding the list of rock paper sissor
 
             IsRunning = true;
             Render();
@@ -60,6 +59,7 @@ namespace LAB_FINAL_01
         /// <summary>
         /// Performs one simulation tick: move, resolve collisions, render.
         /// Returns frame count and winner information as tuple per constraint requirement.
+        /// /returning the count and the winner 
         /// </summary>
         public (int frameCount, HandType? winner) Tick()//main core of the cose checking collision , doing rendering 
         {
@@ -68,9 +68,11 @@ namespace LAB_FINAL_01
             _frameCount++;
             MoveHands();
             ResolveCollisions();
-            Render();
+            Render();//checking the methods we creaded in the class
+            //at the end drawing
 
             HandType? winner = _hands.GetWinner();
+            //if we got the winner so evering thing gonna be stoped
             if (winner.HasValue)
             {
                 IsRunning = false;
@@ -78,6 +80,11 @@ namespace LAB_FINAL_01
 
             return (_frameCount, winner);
         }
+
+        /// <summary>
+        /// MoveHands()  just nothing just doing basic thing like moving the bolls
+        /// like int the enum rock paper sissor 
+        /// </summary>
         private void MoveHands()
         {
             for (int i = 0; i < _hands.Count; i++)
@@ -90,7 +97,7 @@ namespace LAB_FINAL_01
                 {
                     hand.Velocity = new PointF(-hand.Velocity.X, hand.Velocity.Y);newPos.X = Math.Clamp(newPos.X, Hand.HAND_SIZE, CANVAS_WIDTH - Hand.HAND_SIZE);
                 }
-
+                //would not gour out
                 if (newPos.Y < Hand.HAND_SIZE || newPos.Y > CANVAS_HEIGHT - Hand.HAND_SIZE)
                 {
                     hand.Velocity = new PointF(hand.Velocity.X, -hand.Velocity.Y);newPos.Y = Math.Clamp(newPos.Y, Hand.HAND_SIZE, CANVAS_HEIGHT - Hand.HAND_SIZE);
@@ -100,6 +107,12 @@ namespace LAB_FINAL_01
                 _hands[i] = hand;
             }
         }
+
+        /// <summary>
+        /// this is the main part in the game like checking the collision
+        /// for example of rock==sissor rock wins and then only if collision happens
+        /// other wise would not run
+        /// </summary>
         private void ResolveCollisions()
         {
             for (int i = 0; i < _hands.Count - 1; i++)
@@ -121,7 +134,7 @@ namespace LAB_FINAL_01
                         {
                             Hand loser = _hands[i];
                             loser.Type = winnerType;
-                            loser.Color = GetColorForType(winnerType);
+                            loser.Color = GetColorForType(winnerType);//getting the tings of the winner
                             _hands[i] = loser;
                         }
                         //if i is the winnder then it gonna go with the first on else the opponent won
@@ -129,18 +142,28 @@ namespace LAB_FINAL_01
                 }
             }
         }
-
+        /// <summary>
+        /// Render not doing anything special just created because i dont
+        /// want to use clear then draw then render again angain just save s time 
+        /// render doing every thing 
+        /// </summary>
         private void Render()
         {
             _drawer.Clear();
             foreach (Hand hand in _hands)
             {
-                _drawer.AddCenteredEllipse((int)hand.Position.X, (int)hand.Position.Y, (int)Hand.HAND_SIZE, (int)Hand.HAND_SIZE, hand.Color);
-                _drawer.AddText(GetTextForType(hand.Type),15, (int)hand.Position.X - 5, (int)hand.Position.Y - 5, (int)Hand.HAND_SIZE/2, (int)Hand.HAND_SIZE/2, Color.White) ;
+                _drawer.AddCenteredEllipse((int)hand.Position.X, (int)hand.Position.Y, (int)Hand.HAND_SIZE, (int)Hand.HAND_SIZE, hand.Color);//just for the ball
+                _drawer.AddText(GetTextForType(hand.Type),15, (int)hand.Position.X - 5, (int)hand.Position.Y - 5, (int)Hand.HAND_SIZE/2, (int)Hand.HAND_SIZE/2, Color.White) ;//then for the text
             
             }
            _drawer.Render();
         }
+        /// <summary>
+        /// just work as witch ehenever needed the enum like rock clor 
+        /// juse this thing and you got it back
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         private static Color GetColorForType(HandType type)
         {
             return type switch
@@ -151,6 +174,12 @@ namespace LAB_FINAL_01
                 _ => Color.Black
             };
         }
+        /// <summary>
+        /// just work as witch ehenever needed the enum like rock R sissor s just meke ti simple 
+        /// juse this thing and you got it back
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static string GetTextForType(HandType type)
         {
             return type switch
@@ -160,11 +189,6 @@ namespace LAB_FINAL_01
                 HandType.Scissors => "S",
                 _ => ""
             };
-        }
-
-        public void Close()
-        {
-            _drawer.Close();
         }
     }
 }
